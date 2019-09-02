@@ -11,5 +11,6 @@ int * createRandomArray();
 void showArray();
 void * sort(int *);
 void swap(int, int); 
+void printParts(int , int ); 
 
 #endif

@@ -13,8 +13,8 @@ int main(int argc, char ** argv) {
     createRandomArray();
     printf("\n\nInitial array: \n\n");
     showArray();
-    printf("\n\nFinal array: \n\n");
     sort(firstIndexes);
+    printf("\n\nFinal array: \n\n");
     showArray();
     printf("\n");
 }

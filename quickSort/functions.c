@@ -34,6 +34,8 @@ void  * sort(int * indexes) {
         swap(leftIndex, rightIndex);
         leftIndex++; rightIndex--;
     }
+    printf("\nI'm the thread %ld and I sorted the array since the position %d 'till the position %d \n\n", pthread_self(),firstIndex, lastIndex);
+    printParts(firstIndex, lastIndex);
     pthread_t thread_1, thread_2;
     int newLeftIndex1 = firstIndex; int newRightIndex1 = leftIndex - 1;
     int newLeftIndex2 = leftIndex +1; int newRightIndex2 = lastIndex;
@@ -64,4 +66,11 @@ void showArray() {
         printf("%d ", arrayOfNumbers[index]);
     }
     printf("\n");
+}
+
+void printParts(int firstIndex, int lastIndex) {
+    for(int index = firstIndex; index <= lastIndex; index++) {
+        printf("%d ", arrayOfNumbers[index]);
+    }
+    printf("\n\n");
 }
