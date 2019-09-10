@@ -74,8 +74,9 @@ void * getGlobalValue() {
 				closeSemaphore(total_semaphores, semaphores_id); // consumos
 				if(total_consumers < total_productions * (total_threads / 2)) {
                     setValueOnFile(critic_section[current_semaphore - 1]);
-                    printf(" >> Consumo '%s' leído en la seccion %d por %ld [%d]\n",critic_section[current_semaphore - 1],
-                    current_semaphore, pthread_self(), ++total_consumers);
+                    // printf(" >> Consumo '%s' leído en la seccion %d por %ld [%d]\n",critic_section[current_semaphore - 1],
+                    // current_semaphore, pthread_self(), ++total_consumers);
+                    ++total_consumers;
                 }
 				openSemaphore(total_semaphores, semaphores_id);
 				openSemaphore(current_semaphore - 1, semaphores_id);	
@@ -102,7 +103,7 @@ void createSemaphores() {
     }
 }
 void initializeSemaphores() {
-    printf("id = %d.\n", semaphores_id);
+    printf("if thre's a deadthlock type ipcrm -s %d\n", semaphores_id);
     for (int current_semaphore = 0; current_semaphore < total_semaphores; current_semaphore++) {
         int productor, consumer;
         productor = semctl(semaphores_id, current_semaphore++, SETVAL, open);

@@ -30,8 +30,8 @@ int main(int argc, char ** argv) {
 		pthread_create(&threads[++i], NULL, (void *)getGlobalValue, NULL);
 	}
     wait(threads);
-    showCriticSections();
     semctl(semaphores_id, 0, IPC_RMID, 0);
+    printf("We've finished\n\n");
     return 0;
 }
 
