@@ -11,7 +11,7 @@
 
 void getData(char **);
 
-int petitions_counter = 0;
+
 int client_counter = 0;
 
 void CreateSocket(int * descriptor) {
@@ -37,12 +37,15 @@ void MakeBind(int * descriptor) {
     }
 }
 
-void Listen(int descriptor) {
+void Listen(int descriptor, int mode) {
     if (listen(descriptor, totalClients) < 0) {
         perror("\nError while listening\n");
         exit(EXIT_FAILURE);
     }
-    printf("\nSocket listening in port %d\n", PORT);
+    if (mode == BLOCKING)
+        printf("\nSocket listening in port %d on blocking mode\n", PORT);
+    else
+        printf("\nSocket listening in port %d on not blocking mode\n", PORT);
 }
 
 void AcceptBlocking(struct sockaddr_in  address, int descriptor, int struct_len) {
@@ -56,11 +59,10 @@ void AcceptBlocking(struct sockaddr_in  address, int descriptor, int struct_len)
             exit(EXIT_FAILURE);
         }
         while( (recv(comunication_chanel_descriptor, buffer, BUFFER_TAM, 0) > 0) ) {
-            printf("\n I got %s %d\n", buffer, ++petitions_counter);
+            printf("\n I got %s \n", buffer);
             send(comunication_chanel_descriptor, response, strlen(response), 0);
             bzero(buffer, sizeof(buffer));
         }
-        printf("\nSali\n");
     }
 }
 void AcceptNotBlocking(struct sockaddr_in  address, int descriptor, int struct_len) {
@@ -82,7 +84,6 @@ void ConnectClient(int descriptor) {
         char *client_message = (char *)malloc(sizeof(char) * BUFFER_TAM);
         getData(&client_message);
         send(descriptor , client_message , strlen(client_message) , 0 );
-        printf("\n%s\n", client_message );
         if ( (++client_counter % 2) == 0) {
             if (recv( descriptor , server_response, BUFFER_TAM, 0) < 0)
                 printf("[-]Error in receiving data.\n");

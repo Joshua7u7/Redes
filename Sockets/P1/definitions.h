@@ -13,7 +13,7 @@
 
 void CreateSocket(int * );
 void MakeBind(int * );
-void Listen(int );
+void Listen(int , int);
 void AcceptNotBlocking(struct sockaddr_in  , int , int );
 void AcceptBlocking(struct sockaddr_in  , int , int );
 struct sockaddr_in InetPton();

@@ -11,14 +11,15 @@ int main(int argc , char ** argv) {
     int server_descriptor;
     int mode = atoi(argv[1]);
     struct sockaddr_in client;
-    CreateSocket(&server_descriptor);
-    MakeBind(&server_descriptor);
-    Listen(server_descriptor);
-    if (mode == BLOCKING)
-    	AcceptBlocking(client, server_descriptor, sizeof(client));
-    else if( mode == NOTBLOCKING)
-    	AcceptNotBlocking(client, server_descriptor, sizeof(client));
-    else
+    if ( (mode == BLOCKING) || (mode == NOTBLOCKING) ) {
+    	CreateSocket(&server_descriptor);
+    	MakeBind(&server_descriptor);
+    	Listen(server_descriptor, mode);
+    	if (mode == BLOCKING)
+    		AcceptBlocking(client, server_descriptor, sizeof(client));
+    	else if( mode == NOTBLOCKING)
+    		AcceptNotBlocking(client, server_descriptor, sizeof(client));
+    } else
     	printf("\nSet 1 for BLOCKING and 2 for NOT BLOCKING\n");
     return 0;
 }
