@@ -5,9 +5,14 @@
 #include <unistd.h>
 #include <netinet/in.h>
 #include <string.h>
+#include <arpa/inet.h> 
+#include <pthread.h>
 #include "definitions.h"
 
+void getData(char **);
+
 int petitions_counter = 0;
+int client_counter = 0;
 
 void CreateSocket(int * descriptor) {
     if ( (*descriptor = socket(AF_INET, SOCK_STREAM, 0)) == ERROR ) {
@@ -40,21 +45,80 @@ void Listen(int descriptor) {
     printf("\nSocket listening in port %d\n", PORT);
 }
 
-void Accept(struct sockaddr_in  address, int descriptor, int struct_len) {
+void AcceptBlocking(struct sockaddr_in  address, int descriptor, int struct_len) {
     int comunication_chanel_descriptor;
     char * response = "Hello from server";
     char buffer[BUFFER_TAM];
+    bzero(buffer, sizeof(buffer));
     while (1) {
         if ( (comunication_chanel_descriptor = accept(descriptor, (struct sockaddr *)&address, (socklen_t*)&struct_len)) < 0) {
-        perror("\nError in accept\n");
-        exit(EXIT_FAILURE);
+            perror("\nError in accept\n");
+            exit(EXIT_FAILURE);
         }
-        int valread = read(comunication_chanel_descriptor, buffer, BUFFER_TAM);
-        printf("\n I got %s\n", buffer);
-        if (++petitions_counter == 2) {
+        while( (recv(comunication_chanel_descriptor, buffer, BUFFER_TAM, 0) > 0) ) {
+            printf("\n I got %s %d\n", buffer, ++petitions_counter);
             send(comunication_chanel_descriptor, response, strlen(response), 0);
-            petitions_counter = 0;
+            bzero(buffer, sizeof(buffer));
+        }
+        printf("\nSali\n");
+    }
+}
+void AcceptNotBlocking(struct sockaddr_in  address, int descriptor, int struct_len) {
+    int comunication_chanel_descriptor;
+    while ((comunication_chanel_descriptor = accept(descriptor, (struct sockaddr *)&address, (socklen_t*)&struct_len)) ) {
+        pthread_t new_connection;
+        pthread_create(&new_connection, NULL, handleConnections, (void*)&comunication_chanel_descriptor);
+    }
+}
+
+void ConnectClient(int descriptor) {
+    struct sockaddr_in serv_addr = InetPton();
+    char server_response[BUFFER_TAM] = {0};
+    if (connect(descriptor, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) < 0) { 
+        perror("\nConnection Failed \n");
+        exit(EXIT_FAILURE);
+    }
+    while(1) {
+        char *client_message = (char *)malloc(sizeof(char) * BUFFER_TAM);
+        getData(&client_message);
+        send(descriptor , client_message , strlen(client_message) , 0 );
+        printf("\n%s\n", client_message );
+        if ( (++client_counter % 2) == 0) {
+            if (recv( descriptor , server_response, BUFFER_TAM, 0) < 0)
+                printf("[-]Error in receiving data.\n");
+            else
+                printf("\n The server response is: %s\n", server_response );
         }
     }
 }
 
+void getData(char ** client_message) {
+    fflush(stdin);
+    printf("\nWrite the client message: \n");
+    scanf("%[^\n]", *client_message);
+    getchar();
+    fflush(stdin);
+}
+
+struct sockaddr_in InetPton() {
+    struct sockaddr_in serv_addr; 
+    serv_addr.sin_family = AF_INET; 
+    serv_addr.sin_port = htons(PORT); 
+    if(inet_pton(AF_INET, LOCALHOST, &serv_addr.sin_addr) <= 0) { 
+        perror("\nInvalid address/ Address not supported \n");
+        exit(EXIT_FAILURE); 
+    }
+    return serv_addr;
+}
+
+void * handleConnections(void * connection) {
+    char * response = "Hello from server";
+    char buffer[BUFFER_TAM];
+    bzero(buffer, sizeof(buffer));
+    int comunication_chanel_descriptor = *(int *)connection;
+    while( (recv(comunication_chanel_descriptor, buffer, BUFFER_TAM, 0) > 0) ) {
+        printf("\n I got %s \n", buffer);
+        send(comunication_chanel_descriptor, response, strlen(response), 0);
+        bzero(buffer, sizeof(buffer));
+    }
+}
