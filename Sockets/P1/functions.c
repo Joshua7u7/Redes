@@ -10,7 +10,7 @@
 #include "definitions.h"
 
 void getData(char **);
-
+void writeMessageInFile(char * , char * );
 
 int client_counter = 0;
 
@@ -66,16 +66,22 @@ void AcceptBlocking(struct sockaddr_in  address, int descriptor, int struct_len)
     }
 }
 void AcceptNotBlocking(struct sockaddr_in  address, int descriptor, int struct_len) {
-    int comunication_chanel_descriptor;
-    while ((comunication_chanel_descriptor = accept(descriptor, (struct sockaddr *)&address, (socklen_t*)&struct_len)) ) {
-        pthread_t new_connection;
-        pthread_create(&new_connection, NULL, handleConnections, (void*)&comunication_chanel_descriptor);
+    while (1){
+    int * comunication_chanel_descriptor = (int*)malloc(sizeof(int));
+        if ((*comunication_chanel_descriptor = accept(descriptor, (struct sockaddr *)&address, (socklen_t*)&struct_len)) ) {
+            pthread_t new_connection ;
+            pthread_create(&new_connection, NULL, handleConnections, (void*)comunication_chanel_descriptor);
+    }
     }
 }
 
 void ConnectClient(int descriptor) {
     struct sockaddr_in serv_addr = InetPton();
     char server_response[BUFFER_TAM] = {0};
+    if (inet_pton(AF_INET, CLIENTSERVER, &serv_addr.sin_addr) <= 0) {
+        perror("Error on inet_pton\n");
+        exit(EXIT_FAILURE);
+    }
     if (connect(descriptor, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) < 0) { 
         perror("\nConnection Failed \n");
         exit(EXIT_FAILURE);
@@ -118,8 +124,21 @@ void * handleConnections(void * connection) {
     bzero(buffer, sizeof(buffer));
     int comunication_chanel_descriptor = *(int *)connection;
     while( (recv(comunication_chanel_descriptor, buffer, BUFFER_TAM, 0) > 0) ) {
-        printf("\n I got %s \n", buffer);
+        writeMessageInFile("server.txt", buffer);
         send(comunication_chanel_descriptor, response, strlen(response), 0);
+        printf("\n I got %s \n", buffer);
         bzero(buffer, sizeof(buffer));
     }
+    free(connection);
+}
+
+void writeMessageInFile(char * filename, char * message) {
+    FILE * file = fopen(filename, "ab");
+    fprintf(file, " %s \n" , message);
+    fclose(file);
+}
+
+void initializeFile() {
+    FILE * file = fopen("server.txt", "wb");
+    fclose(file);   
 }
