@@ -13,7 +13,7 @@ int main(int argc , char ** argv) {
     int server_descriptor;
     int mode = atoi(argv[1]);
     struct sockaddr_in client;
-    
+	initializeFile();
     if ( (mode == BLOCKING) || (mode == NOTBLOCKING) ) {
     	CreateSocket(&server_descriptor);
     	MakeBind(&server_descriptor);
