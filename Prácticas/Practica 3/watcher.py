@@ -55,19 +55,21 @@ class FSHandler:
     def on_modified(self, event):
         client_message = f"modified, {event.src_path}"
         self.socket.send(bytes(client_message, 'utf-8'))
-        self.socket.recv(1024)
+        time.sleep(2)
         while True:
             file = open(event.src_path, 'rb')
             content = file.read(1024)
             while content:
                 self.socket.send(content)
                 content = file.read(1024)
-                self.socket.recv(1024)
+                time.sleep(2)
+                # self.socket.recv(1024)
             break
         try:
             self.socket.send(bytes("Finish", "utf-8"))
-            self.socket.recv(1024)
+            # self.socket.recv(1024)
         except Exception:
+            self.socket.send(bytes("Finish", "utf-8"))
             traceback.print_exc()
         file.close()
         

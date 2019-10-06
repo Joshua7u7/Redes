@@ -1,4 +1,5 @@
 import socket 
+import traceback
 
 class ClientSocket:
 
@@ -21,5 +22,5 @@ class ClientSocket:
                 server_message = server_message.decode("utf-8")
                 print(server_message)
             except Exception:
-                print("error")
+                traceback.print_exc()
                 break
