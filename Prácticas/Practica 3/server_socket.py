@@ -79,7 +79,7 @@ class SocketServer:
                 file = open(self.server_files + filename, 'wb')
                 file.write(bytes(info, 'utf-8'))
                 file.close()
-                # self.notify_clients(connection, 'modified', filename, '', info, '')
+                self.notify_clients(connection, 'modified', filename, '', info, '')
                 info = ''
             else :
                 info += client_message
