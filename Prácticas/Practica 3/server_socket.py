@@ -2,6 +2,8 @@ import socket
 import threading
 import os
 import traceback
+import time
+import asyncio
 
 class SocketServer:
 
@@ -31,7 +33,7 @@ class SocketServer:
                     client_socket, (client_host, client_port) = self.server_descriptor.accept()
                     print(str(client_host) + ":" + str(client_port))
                     self.active_connections.append(client_socket)
-                    threading.Thread(target=self.handle_connections, args=(self.active_connections[-1], ) ).start()
+                    threading.Thread(target =  self.handle_connections, args=(self.active_connections[-1], ) ).start()
             except:
                 break
         self.server_descriptor.close()
@@ -43,12 +45,12 @@ class SocketServer:
         info = ''
         while True:
             try:
-                client_message = connection.recv(1024)
+                client_message =  connection.recv(1024)
                 client_message = client_message.decode('utf-8')
                 option = client_message.split(',')[0]
                 if option in valid_options:
                     actions_maded.append(option)
-                filename, info = self.make_actions(option, client_message, actions_maded, filename, info)
+                filename, info = self.make_actions(option, client_message, actions_maded, filename, info, connection)
             except Exception:
                 traceback.print_exc()
                 exit(1)
@@ -56,20 +58,23 @@ class SocketServer:
                 break
         connection.close()
 
-    def make_actions(self, option, client_message, actions_maded, filename, info):
+    def make_actions(self, option, client_message, actions_maded, filename, info, connection):
         if  option == 'created':
             filename =  client_message.split(',')[1].split("\\")[-1]
             open(self.server_files+filename, "wb")
             print(option + " >>  " + filename)
+            self.notify_clients(connection, option, filename, '', '')
         elif  option == 'moved':
             src = client_message.split(',')[-2].split("\\")[-1]
             dest = client_message.split(',')[-1].split("\\")[-1]
             os.rename(self.server_files+src, self.server_files+dest)
             print(option + " >>  " + src + " to " + dest)
+            self.notify_clients(connection, option, src, dest, '')
         elif  option == 'deleted':
             filename = client_message.split(',')[-1].split("\\")[-1]
             os.remove(self.server_files+filename)
             print(option + " >>  " + filename)
+            self.notify_clients(connection, option, filename, '', '')
         elif option == 'modified':
             filename = client_message.split(',')[-1].split("\\")[-1]
             print(option + " >>  " + filename)
@@ -77,8 +82,9 @@ class SocketServer:
             if client_message == 'Finish':
                 file = open(self.server_files + filename, 'wb')
                 file.write(bytes(info, 'utf-8'))
-                info = ''
                 file.close()
+                self.notify_clients(connection, 'modified', filename, '', info)
+                info = ''
             else :
                 info += client_message
         if option == 'modified' or actions_maded[-1] == 'modified':
@@ -87,6 +93,11 @@ class SocketServer:
             return dest, info
         else:
              return "made", info
+
+    def notify_clients(self, current_connection, option, src, dest, info):
+        for connection in self.active_connections:
+            print(connection == current_connection)
+
 
 
 

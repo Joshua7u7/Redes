@@ -63,6 +63,7 @@ class FSHandler:
                 content = file.read(1024)
             break
         try:
+            time.sleep(2)
             self.socket.send(bytes("Finish", "utf-8"))
         except Exception:
             traceback.print_exc()
