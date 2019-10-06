@@ -5,7 +5,7 @@ from watchdog.events import PatternMatchingEventHandler
 import traceback
 
 class FSHandler:
-    path = "C:\\Users\\josue\\Documents\\Redes\\Prácticas\\Practica 3\\client_filles\\" 
+    path = "C:\\Users\\josue.ruiz\\Documents\\ESCOM\\Redes\\Prácticas\\Practica 3\\client_files\\" 
     patterns = "*"
     ignore_patterns = ""
     ignore_directories = False
@@ -65,7 +65,6 @@ class FSHandler:
                 self.socket.recv(1024)
             break
         try:
-            time.sleep(2)
             self.socket.send(bytes("Finish", "utf-8"))
             self.socket.recv(1024)
         except Exception:
