@@ -13,6 +13,8 @@ class FSHandler:
     ignore_patterns = ""
     ignore_directories = False
     case_sensitive = True
+    option = ''
+    current_file = ''
     def __init__(self, socket, host, port):
         self.socket = socket
         self.host = host
@@ -47,35 +49,55 @@ class FSHandler:
     def on_created(self, event):
         try:
             client_message = f"created, {event.src_path}"
-            self.socket.send(bytes(client_message, 'utf-8'))
+            if self.option == 'created' and self.current_file == event.src_path:
+                print("I detected " + self.option + " and " + self.current_file + " again")
+            else:
+                self.option = 'created'
+                self.current_file = self.current_file == event.src_path
+                self.socket.send(bytes(client_message, 'utf-8'))
         except:
             print("Error de permisos")
 
     def on_deleted(self, event):
         client_message = f"deleted, {event.src_path}"
-        self.socket.send(bytes(client_message, 'utf-8'))
+        if self.option == 'deleted' and self.current_file == event.src_path:
+            print("I detected " + self.option + " and " + self.current_file + " again")
+        else:
+            self.option = 'deleted'
+            self.current_file = self.current_file == event.src_path
+            self.socket.send(bytes(client_message, 'utf-8'))
 
     def on_modified(self, event):
         client_message = f"modified, {event.src_path}"
-        self.socket.send(bytes(client_message, 'utf-8'))
-        time.sleep(2)
-        while True:
-            file = open(event.src_path, 'rb')
-            content = file.read(1024)
-            while content:
-                self.socket.send(content)
+        if self.option == 'modified' and self.current_file == event.src_path:
+            print("I detected " + self.option + " and " + self.current_file + " again")
+        else:
+            self.option = 'modified'
+            self.current_file  = event.src_path
+            self.socket.send(bytes(client_message, 'utf-8'))
+            time.sleep(2)
+            while True:
+                file = open(event.src_path, 'rb')
                 content = file.read(1024)
-                time.sleep(2)
+                while content:
+                    self.socket.send(content)
+                    content = file.read(1024)
+                    time.sleep(2)
+                    # self.socket.recv(1024)
+                break
+            try:
+                self.socket.send(bytes("Finish", "utf-8"))
                 # self.socket.recv(1024)
-            break
-        try:
-            self.socket.send(bytes("Finish", "utf-8"))
-            # self.socket.recv(1024)
-        except Exception:
-            self.socket.send(bytes("Finish", "utf-8"))
-            traceback.print_exc()
-        file.close()
+            except Exception:
+                self.socket.send(bytes("Finish", "utf-8"))
+                traceback.print_exc()
+            file.close()
         
     def on_moved(self, event):
         client_message = f"moved, {event.src_path}, {event.dest_path}"
-        self.socket.send(bytes(client_message, 'utf-8'))
+        if self.option == 'moved' and self.current_file == event.src_path:
+            print("I detected " + self.option + " and " + self.current_file + " again")
+        else:
+            self.option = 'moved'
+            self.current_file = self.current_file == event.dest_path
+            self.socket.send(bytes(client_message, 'utf-8'))
