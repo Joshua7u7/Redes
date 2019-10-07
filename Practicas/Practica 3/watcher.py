@@ -51,40 +51,33 @@ class FSHandler:
         try:
             client_message = f"created, {event.src_path}"
             if self.option == 'created' and self.current_file == event.src_path:
-                print("I detected " + self.option + " and " + self.current_file + " again")
+                print()
             else:
                 self.option = 'created'
                 self.current_file = self.current_file == event.src_path
                 self.socket.send(bytes(client_message, 'utf-8'))
+                time.sleep(2)
         except:
             print("Error de permisos")
 
     def on_deleted(self, event):
         client_message = f"deleted, {event.src_path}"
         if self.option == 'deleted' and self.current_file == event.src_path:
-            print("I detected " + self.option + " and " + self.current_file + " again")
+            print()
         else:
             self.option = 'deleted'
             self.current_file = self.current_file == event.src_path
             self.socket.send(bytes(client_message, 'utf-8'))
+            time.sleep(2)
 
     def on_modified(self, event):
-        aux_info = ''
         client_message = f"modified, {event.src_path}"
-        file = open(event.src_path, 'rb')
-        aux_info = file.read()
-        file.close()
-        if self.file_information != aux_info:
-            self.option = ''
         if self.option == 'modified' and self.current_file == event.src_path:
-            print("I detected " + self.option + " and " + self.current_file + " again")
+            print()
         else:
             self.option = 'modified'
             self.current_file  = event.src_path
             self.socket.send(bytes(client_message, 'utf-8'))
-            file = open(event.src_path, 'rb')
-            self.file_information == file.read()
-            file.close()
             time.sleep(2)
             while True:
                 file = open(event.src_path, 'rb')
@@ -104,8 +97,9 @@ class FSHandler:
     def on_moved(self, event):
         client_message = f"moved, {event.src_path}, {event.dest_path}"
         if self.option == 'moved' and self.current_file == event.src_path:
-            print("I detected " + self.option + " and " + self.current_file + " again")
+            print()
         else:
             self.option = 'moved'
             self.current_file = self.current_file == event.dest_path
             self.socket.send(bytes(client_message, 'utf-8'))
+            time.sleep(2)
