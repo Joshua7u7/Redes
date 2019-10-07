@@ -47,8 +47,9 @@ class ClientSocket:
                 os.remove(self.path + args[2])
         elif args[1] == 'modified':
             try:
-                file = open(self.path + args[2], 'wb')
-                file.write(bytes(args[3], 'utf-8'))
-                file.close()
+                if len(args[2]) != 0:
+                    file = open(self.path + args[2], 'wb')
+                    file.write(bytes(args[3], 'utf-8'))
+                    file.close()
             except:
                 print("The file is already in use")

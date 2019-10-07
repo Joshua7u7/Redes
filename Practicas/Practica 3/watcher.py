@@ -15,6 +15,7 @@ class FSHandler:
     case_sensitive = True
     option = ''
     current_file = ''
+    file_information = ''
     def __init__(self, socket, host, port):
         self.socket = socket
         self.host = host
@@ -68,13 +69,22 @@ class FSHandler:
             self.socket.send(bytes(client_message, 'utf-8'))
 
     def on_modified(self, event):
+        aux_info = ''
         client_message = f"modified, {event.src_path}"
+        file = open(event.src_path, 'rb')
+        aux_info = file.read()
+        file.close()
+        if self.file_information != aux_info:
+            self.option = ''
         if self.option == 'modified' and self.current_file == event.src_path:
             print("I detected " + self.option + " and " + self.current_file + " again")
         else:
             self.option = 'modified'
             self.current_file  = event.src_path
             self.socket.send(bytes(client_message, 'utf-8'))
+            file = open(event.src_path, 'rb')
+            self.file_information == file.read()
+            file.close()
             time.sleep(2)
             while True:
                 file = open(event.src_path, 'rb')
@@ -83,11 +93,9 @@ class FSHandler:
                     self.socket.send(content)
                     content = file.read(1024)
                     time.sleep(2)
-                    # self.socket.recv(1024)
                 break
             try:
                 self.socket.send(bytes("Finish", "utf-8"))
-                # self.socket.recv(1024)
             except Exception:
                 self.socket.send(bytes("Finish", "utf-8"))
                 traceback.print_exc()
