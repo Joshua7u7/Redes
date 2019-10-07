@@ -35,7 +35,6 @@ class ClientSocket:
         args = server_message.split(',')
         args = [arg.strip() for arg in args]
         if args[1] == 'created':
-            print(os.path.isfile(self.path + args[2]))
             if os.path.isfile(self.path + args[2]) == False:
                 file = open(self.path+args[2], 'wb')
                 file.close()

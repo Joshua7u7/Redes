@@ -54,7 +54,7 @@ class FSHandler:
                 print()
             else:
                 self.option = 'created'
-                self.current_file = self.current_file == event.src_path
+                self.current_file = event.src_path
                 self.socket.send(bytes(client_message, 'utf-8'))
                 time.sleep(2)
         except:
@@ -66,7 +66,7 @@ class FSHandler:
             print()
         else:
             self.option = 'deleted'
-            self.current_file = self.current_file == event.src_path
+            self.current_file = event.src_path
             self.socket.send(bytes(client_message, 'utf-8'))
             time.sleep(2)
 
@@ -100,6 +100,6 @@ class FSHandler:
             print()
         else:
             self.option = 'moved'
-            self.current_file = self.current_file == event.dest_path
+            self.current_file = event.dest_path
             self.socket.send(bytes(client_message, 'utf-8'))
             time.sleep(2)
