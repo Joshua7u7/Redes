@@ -4,12 +4,12 @@
 #define server
 
 #define ERROR -1
-#define PORT 8081
+#define PORT 8086
 #define totalClients 1
 #define BUFFER_TAM 1024
-#define LOCALHOST "10.100.69.253"
+#define LOCALHOST "127.0.0.1"
 // #define CLIENTSERVER "10.100.76.126"
-#define CLIENTSERVER "10.100.69.253"
+#define CLIENTSERVER "127.0.0.1"
 #define BLOCKING 1
 #define NOTBLOCKING 2
 

@@ -12,6 +12,7 @@
 void getData(char **);
 void writeMessageInFile(char * , char * );
 
+
 int client_counter = 0;
 
 void CreateSocket(int * descriptor) {
@@ -78,10 +79,8 @@ void AcceptNotBlocking(struct sockaddr_in  address, int descriptor, int struct_l
 void ConnectClient(int descriptor) {
     struct sockaddr_in serv_addr = InetPton();
     char server_response[BUFFER_TAM] = {0};
-    if (inet_pton(AF_INET, CLIENTSERVER, &serv_addr.sin_addr) <= 0) {
-        perror("Error on inet_pton\n");
-        exit(EXIT_FAILURE);
-    }
+    
+    printf("%d", descriptor);
     if (connect(descriptor, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) < 0) { 
         perror("\nConnection Failed \n");
         exit(EXIT_FAILURE);
@@ -90,12 +89,10 @@ void ConnectClient(int descriptor) {
         char *client_message = (char *)malloc(sizeof(char) * BUFFER_TAM);
         getData(&client_message);
         send(descriptor , client_message , strlen(client_message) , 0 );
-        if ( (++client_counter % 2) == 0) {
-            if (recv( descriptor , server_response, BUFFER_TAM, 0) < 0)
-                printf("[-]Error in receiving data.\n");
-            else
-                printf("\n The server response is: %s\n", server_response );
-        }
+        if (recv( descriptor , server_response, BUFFER_TAM, 0) < 0)
+            printf("[-]Error in receiving data.\n");
+        else
+            printf("\n The server response is: %s\n", server_response );
     }
 }
 
@@ -119,14 +116,19 @@ struct sockaddr_in InetPton() {
 }
 
 void * handleConnections(void * connection) {
-    char * response = "Hello from server";
+    // char * response = "Hello from server";
     char buffer[BUFFER_TAM];
     bzero(buffer, sizeof(buffer));
     int comunication_chanel_descriptor = *(int *)connection;
     while( (recv(comunication_chanel_descriptor, buffer, BUFFER_TAM, 0) > 0) ) {
-        writeMessageInFile("server.txt", buffer);
+        char *response = (char *)malloc(sizeof(char) * BUFFER_TAM);
+        getData(&response);
+        printf("%d said %s\n", comunication_chanel_descriptor, buffer);
+        printf("\n Type yor response: ");
+        scanf("%[^\n]", response);
+        //writeMessageInFile("server.txt", buffer);
         send(comunication_chanel_descriptor, response, strlen(response), 0);
-        printf("\n I got %s \n", buffer);
+        // printf("\n I got %s \n", buffer);
         bzero(buffer, sizeof(buffer));
     }
     free(connection);
