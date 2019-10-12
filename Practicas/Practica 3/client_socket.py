@@ -36,7 +36,7 @@ class ClientSocket:
         args = [arg.strip() for arg in args]
         if args[1] == 'created':
             if os.path.isfile(self.path + args[2]) == False:
-                file = open(self.path+args[2], 'wb')
+                file = open(self.path+args[2], 'w', encoding="utf8", errors='ignore')
                 file.close()
         elif args[1] == 'moved':
             if os.path.isfile(self.path + args[2]) == True:
@@ -47,8 +47,8 @@ class ClientSocket:
         elif args[1] == 'modified':
             try:
                 if len(args[2]) != 0:
-                    file = open(self.path + args[2], 'wb')
-                    file.write(bytes(args[3], 'utf-8'))
+                    file = open(self.path + args[2], 'w', encoding="utf8", errors='ignore')
+                    file.write(args[3])
                     file.close()
             except:
                 print("The file is already in use")

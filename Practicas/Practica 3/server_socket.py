@@ -59,7 +59,8 @@ class SocketServer:
 
     def create(self, client_message, option):
         filename =  client_message.split(',')[1].split("\\")[-1]
-        open(self.server_files+filename, "wb")
+        file = open(self.server_files+filename, "w", encoding="utf8", errors='ignore')
+        file.close()
         print(option + " >>  " + filename)
         return filename
 
@@ -80,8 +81,8 @@ class SocketServer:
 
     def increase_info(self, info, client_message, connection, filename):
         if client_message == 'Finish':
-            file = open(self.server_files + filename, 'wb')
-            file.write(bytes(info, 'utf-8'))
+            file = open(self.server_files + filename, 'w', encoding="utf8", errors='ignore')
+            file.write(info)
             file.close()
             self.notify_clients(connection, 'modified', filename, '', info, '')
             info = ''

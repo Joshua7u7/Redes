@@ -53,11 +53,9 @@ class FSHandler:
             if self.option == 'created' and self.current_file == event.src_path:
                 print()
             else:
-                time.sleep(2)
                 self.option = 'created'
                 self.current_file = event.src_path
                 self.socket.send(bytes(client_message, 'utf-8'))
-                time.sleep(2)
         except:
             print("Error de permisos")
 
@@ -66,11 +64,9 @@ class FSHandler:
         if self.option == 'deleted' and self.current_file == event.src_path:
             print()
         else:
-            time.sleep(2)
             self.option = 'deleted'
             self.current_file = event.src_path
             self.socket.send(bytes(client_message, 'utf-8'))
-            time.sleep(2)
 
     def on_modified(self, event):
         client_message = f"modified, {event.src_path}"
@@ -78,18 +74,15 @@ class FSHandler:
             print()
         else:
             if os.path.isfile(event.src_path) == True:
-                time.sleep(2)
                 self.option = 'modified'
                 self.current_file  = event.src_path
                 self.socket.send(bytes(client_message, 'utf-8'))
-                time.sleep(2)
                 while True:
-                    file = open(event.src_path, 'rb')
+                    file = open(event.src_path, 'r', encoding="utf8", errors='ignore')
                     content = file.read(1024)
                     while content:
-                        self.socket.send(content)
+                        self.socket.send(bytes(content, "utf-8"))
                         content = file.read(1024)
-                        time.sleep(2)
                     break
                 try:
                     self.socket.send(bytes("Finish", "utf-8"))
@@ -104,8 +97,6 @@ class FSHandler:
             print()
         else:
             if os.path.isfile(event.dest_path) == True:
-                time.sleep(2)
                 self.option = 'moved'
                 self.current_file = event.dest_path
                 self.socket.send(bytes(client_message, 'utf-8'))
-                time.sleep(2)
