@@ -20,7 +20,7 @@ void Listen(int , int);
 void AcceptNotBlocking(struct sockaddr_in  , int , int );
 void AcceptBlocking(struct sockaddr_in  , int , int );
 struct sockaddr_in InetPton();
-void ConnectClient(int);
+void ConnectClient(int, int, char*);
 void * handleConnections(void *);
 void initializeFile();
 void reciveFrom(int );
