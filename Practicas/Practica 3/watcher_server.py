@@ -55,12 +55,11 @@ class FSHandler:
             if self.option == 'created' and self.current_file == event.src_path:
                 print()
             else:
-                time.sleep(2)
                 self.option = 'created'
                 self.current_file = event.src_path
                 for connection in self.active_connections:
                     connection.send(bytes(client_message, 'utf-8'))
-                time.sleep(2)
+                    time.sleep(2)
         except:
             print("Error de permisos")
 
@@ -69,52 +68,41 @@ class FSHandler:
         if self.option == 'deleted' and self.current_file == event.src_path:
             print()
         else:
-            time.sleep(2)
             self.option = 'deleted'
             self.current_file = event.src_path
             for connection in self.active_connections:
                 connection.send(bytes(client_message, 'utf-8'))
-            time.sleep(2)
+                time.sleep(2)
 
     def on_modified(self, event):
-        client_message = f"modified, {event.src_path}"
         if self.option == 'modified' and self.current_file == event.src_path:
             print()
         else:
             if os.path.isfile(event.src_path) == True:
-                time.sleep(2)
                 self.option = 'modified'
                 self.current_file  = event.src_path
+                file = open(event.src_path, 'r', encoding="utf8", errors='ignore')
+                content = file.read()
+                file.close()
+                client_message = 'action,modified,'+event.src_path.split("\\")[-1]+','+content
                 for connection in self.active_connections:
                     connection.send(bytes(client_message, 'utf-8'))
-                time.sleep(2)
-                while True:
-                    file = open(event.src_path, 'rb')
-                    content = file.read(1024)
-                    while content:
-                        for connection in self.active_connections:
-                            connection.send(content)
-                        content = file.read(1024)
-                        time.sleep(2)
-                    break
+                    time.sleep(2)
                 try:
                     for connection in self.active_connections:
                         connection.send(bytes("Finish", "utf-8"))
+                        time.sleep(2)
                 except Exception:
-                    for connection in self.active_connections:
-                        connection.send(bytes("Finish", "utf-8"))
                     traceback.print_exc()
-                file.close()
         
     def on_moved(self, event):
         client_message = "action,moved,"+event.src_path.split("\\")[-1]+","+ event.dest_path.split("\\")[-1]
         if self.option == 'moved' and self.current_file == event.src_path:
             print()
         else:
-            time.sleep(2)
             self.option = 'moved'
             self.current_file = event.dest_path
             for connection in self.active_connections:
                 connection.send(bytes(client_message, 'utf-8'))
-            time.sleep(2)
+                time.sleep(2)
 
