@@ -59,6 +59,7 @@ class FSHandler:
                 self.current_file = event.src_path
                 for connection in self.active_connections:
                     connection.send(bytes(client_message, 'utf-8'))
+                    time.sleep(2)
         except:
             print("Error de permisos")
 
@@ -71,6 +72,7 @@ class FSHandler:
             self.current_file = event.src_path
             for connection in self.active_connections:
                 connection.send(bytes(client_message, 'utf-8'))
+                time.sleep(2)
 
     def on_modified(self, event):
         if self.option == 'modified' and self.current_file == event.src_path:
@@ -85,9 +87,11 @@ class FSHandler:
                 client_message = 'action,modified,'+event.src_path.split("\\")[-1]+','+content
                 for connection in self.active_connections:
                     connection.send(bytes(client_message, 'utf-8'))
+                    time.sleep(2)
                 try:
                     for connection in self.active_connections:
                         connection.send(bytes("Finish", "utf-8"))
+                        time.sleep(2)
                 except Exception:
                     traceback.print_exc()
         
@@ -100,4 +104,5 @@ class FSHandler:
             self.current_file = event.dest_path
             for connection in self.active_connections:
                 connection.send(bytes(client_message, 'utf-8'))
+                time.sleep(2)
 

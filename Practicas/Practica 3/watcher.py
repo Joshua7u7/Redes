@@ -56,6 +56,7 @@ class FSHandler:
                 self.option = 'created'
                 self.current_file = event.src_path
                 self.socket.send(bytes(client_message, 'utf-8'))
+                time.sleep(2)
         except:
             print("Error de permisos")
 
@@ -67,6 +68,7 @@ class FSHandler:
             self.option = 'deleted'
             self.current_file = event.src_path
             self.socket.send(bytes(client_message, 'utf-8'))
+            time.sleep(2)
 
     def on_modified(self, event):
         client_message = f"modified, {event.src_path}"
@@ -77,17 +79,21 @@ class FSHandler:
                 self.option = 'modified'
                 self.current_file  = event.src_path
                 self.socket.send(bytes(client_message, 'utf-8'))
+                time.sleep(2)
                 while True:
                     file = open(event.src_path, 'r', encoding="utf8", errors='ignore')
                     content = file.read(1024)
                     while content:
                         self.socket.send(bytes(content, "utf-8"))
                         content = file.read(1024)
+                        time.sleep(2)
                     break
                 try:
                     self.socket.send(bytes("Finish", "utf-8"))
+                    time.sleep(2)
                 except Exception:
                     self.socket.send(bytes("Finish", "utf-8"))
+                    time.sleep(2)
                     traceback.print_exc()
                 file.close()
         
@@ -100,3 +106,4 @@ class FSHandler:
                 self.option = 'moved'
                 self.current_file = event.dest_path
                 self.socket.send(bytes(client_message, 'utf-8'))
+                time.sleep(2)
