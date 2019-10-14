@@ -87,11 +87,8 @@ void AcceptNotBlocking(struct sockaddr_in  address, int descriptor, int struct_l
 void ConnectClient(int descriptor) {
     struct sockaddr_in serv_addr = InetPton();
     char server_response[BUFFER_TAM] = {0};
-<<<<<<< HEAD
     
     printf("%d", descriptor);
-=======
->>>>>>> 19de3b81861180899466d5763b187942e97e34f1
     if (connect(descriptor, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) < 0) { 
         perror("\nConnection Failed \n");
         exit(EXIT_FAILURE);
@@ -104,10 +101,6 @@ void ConnectClient(int descriptor) {
         send(descriptor , client_message , strlen(client_message) , 0 );
         if (recv( descriptor , server_response, BUFFER_TAM, 0) < 0)
             printf("[-]Error in receiving data.\n");
-<<<<<<< HEAD
-        else
-            printf("\n The server response is: %s\n", server_response );
-=======
         else {
             if (strcmp(server_response, "@") == 0)
                 break;
@@ -115,7 +108,6 @@ void ConnectClient(int descriptor) {
                 printf("\n The server response is: %s\n", server_response );
         }
         bzero(server_response, sizeof(server_response));
->>>>>>> 19de3b81861180899466d5763b187942e97e34f1
     }
     close(descriptor);
 }
@@ -141,21 +133,6 @@ struct sockaddr_in InetPton() {
 
 void * handleConnections(void * connection) {
     // char * response = "Hello from server";
-<<<<<<< HEAD
-    char buffer[BUFFER_TAM];
-    bzero(buffer, sizeof(buffer));
-    int comunication_chanel_descriptor = *(int *)connection;
-    while( (recv(comunication_chanel_descriptor, buffer, BUFFER_TAM, 0) > 0) ) {
-        char *response = (char *)malloc(sizeof(char) * BUFFER_TAM);
-        getData(&response);
-        printf("%d said %s\n", comunication_chanel_descriptor, buffer);
-        printf("\n Type yor response: ");
-        scanf("%[^\n]", response);
-        //writeMessageInFile("server.txt", buffer);
-        send(comunication_chanel_descriptor, response, strlen(response), 0);
-        // printf("\n I got %s \n", buffer);
-        bzero(buffer, sizeof(buffer));
-=======
     char * response = (char *)malloc(sizeof(char) * BUFFER_TAM);
     char buffer[BUFFER_TAM];
     bzero(buffer, sizeof(buffer));
@@ -171,7 +148,6 @@ void * handleConnections(void * connection) {
                 bzero(buffer, sizeof(buffer));
             }
         }
->>>>>>> 19de3b81861180899466d5763b187942e97e34f1
     }
     close(comunication_chanel_descriptor);
 }
