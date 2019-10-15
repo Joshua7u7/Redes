@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <unistd.h>
@@ -42,50 +43,47 @@ void reciveFrom(int descriptor) {
     char * buf = (char*)malloc(sizeof(char)* BUFFER_TAM);
     struct sockaddr_in address;
     char * response = "Respuesta del servidor";
-    socklen_t addr_size = sizeof(address);
+    int addr_size = sizeof(address);
     while(TRUE) {
         ssize_t msg_size = recvfrom( descriptor, buf, sizeof(char)* BUFFER_TAM, 0, 
-        (struct sockaddr_in*)&address, &addr_size);
+        (struct sockaddr*)&address, &addr_size);
         char * ip = inet_ntoa(address.sin_addr);
         printf("I received the message %s by %s\n", buf,ip);
         sendto( descriptor, response, sizeof(response), 0, 
-        (struct sockaddr_in*)&address, &addr_size);
+        (struct sockaddr*)&address, addr_size);
     }
 }
 
 void sendTo(int descriptor) {
     char * buf = (char*)malloc(sizeof(char)* BUFFER_TAM);
     struct sockaddr_in address;
-    socklen_t addr_size = sizeof(address);
+    int addr_size = sizeof(address);
     while(TRUE) {
         char * response;
         scanf("%[^\n]", response);
         sendto( descriptor, response, sizeof(response), 0, 
-        (struct sockaddr_in*)&address, &addr_size);
+        (struct sockaddr*)&address, addr_size);
         ssize_t msg_size = recvfrom( descriptor, buf, sizeof(char)* BUFFER_TAM, 0, 
-        (struct sockaddr_in*)&address, &addr_size);
+        (struct sockaddr*)&address, &addr_size);
         char * ip = inet_ntoa(address.sin_addr);
         printf("Server says %s by %s\n", buf,ip);
     }
 }
 
-void ConnectClient(int descriptor) {
+void ConnectClient(int descriptor, int seconds, char* message) {
     struct sockaddr_in serv_addr = InetPton();
     char server_response[BUFFER_TAM] = {0};
-    
-    printf("%d", descriptor);
     if (connect(descriptor, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) < 0) { 
         perror("\nConnection Failed \n");
         exit(EXIT_FAILURE);
     }
-    while(1) {
-        char *client_message = (char *)malloc(sizeof(char) * BUFFER_TAM);
-        getData(&client_message);
-        send(descriptor , client_message , strlen(client_message) , 0 );
+    while(TRUE) {
+        send(descriptor , message , strlen(message) , 0 );
         if (recv( descriptor , server_response, BUFFER_TAM, 0) < 0)
             printf("[-]Error in receiving data.\n");
         else
             printf("\n The server response is: %s\n", server_response );
+        usleep(seconds);
     }
 }
 

@@ -7,7 +7,7 @@
 #define PORT 8081
 #define totalClients 2
 #define BUFFER_TAM 1024
-#define LOCALHOST "192.168.0.10"
+#define LOCALHOST "127.0.0.1"
 #define BLOCKING 1
 #define NOTBLOCKING 2
 
