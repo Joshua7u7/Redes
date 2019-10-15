@@ -58,8 +58,8 @@ class FSHandler:
                 self.option = 'created'
                 self.current_file = event.src_path
                 for connection in self.active_connections:
-                    connection.send(bytes(client_message, 'utf-8'))
-                    time.sleep(2)
+                    connection.send(bytes(client_message, 'latin1'))
+                    time.sleep(1)
         except:
             print("Error de permisos")
 
@@ -71,8 +71,28 @@ class FSHandler:
             self.option = 'deleted'
             self.current_file = event.src_path
             for connection in self.active_connections:
-                connection.send(bytes(client_message, 'utf-8'))
-                time.sleep(2)
+                connection.send(bytes(client_message, 'latin1'))
+                time.sleep(1)
+
+    def send_info_data(self, filename):
+        if os.path.isfile(filename) == True:
+            file = open(filename, 'rb')
+            content = file.read(1024)
+            while True:
+                while content:
+                    for connection in self.active_connections:
+                        connection.send(content)
+                    content = file.read(1024)
+                break
+            try:
+                time.sleep(1)
+                for connection in self.active_connections:
+                    connection.send(bytes("Finish", "latin1"))
+            except Exception:
+                time.sleep(1)
+                for connection in self.active_connections:
+                    connection.send(bytes("Finish", "latin1"))
+            file.close()        
 
     def on_modified(self, event):
         if self.option == 'modified' and self.current_file == event.src_path:
@@ -81,19 +101,12 @@ class FSHandler:
             if os.path.isfile(event.src_path) == True:
                 self.option = 'modified'
                 self.current_file  = event.src_path
-                file = open(event.src_path, 'r', encoding="utf8", errors='ignore')
-                content = file.read()
-                file.close()
-                client_message = 'action,modified,'+event.src_path.split("\\")[-1]+','+content
+                client_message = 'action,modified,'+event.src_path.split("\\")[-1]
                 for connection in self.active_connections:
-                    connection.send(bytes(client_message, 'utf-8'))
-                    time.sleep(2)
-                try:
-                    for connection in self.active_connections:
-                        connection.send(bytes("Finish", "utf-8"))
-                        time.sleep(2)
-                except Exception:
-                    traceback.print_exc()
+                    connection.send(bytes(client_message, 'latin1'))
+                    time.sleep(1)
+                self.send_info_data(event.src_path)
+                
         
     def on_moved(self, event):
         client_message = "action,moved,"+event.src_path.split("\\")[-1]+","+ event.dest_path.split("\\")[-1]
@@ -103,6 +116,7 @@ class FSHandler:
             self.option = 'moved'
             self.current_file = event.dest_path
             for connection in self.active_connections:
-                connection.send(bytes(client_message, 'utf-8'))
-                time.sleep(2)
+                connection.send(bytes(client_message, 'latin1'))
+                time.sleep(1)
+            self.send_info_data(event.dest_path)
 

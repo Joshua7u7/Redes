@@ -55,8 +55,8 @@ class FSHandler:
             else:
                 self.option = 'created'
                 self.current_file = event.src_path
-                self.socket.send(bytes(client_message, 'utf-8'))
-                time.sleep(2)
+                self.socket.send(client_message.encode("latin1"))
+                time.sleep(1)
         except:
             print("Error de permisos")
 
@@ -67,8 +67,26 @@ class FSHandler:
         else:
             self.option = 'deleted'
             self.current_file = event.src_path
-            self.socket.send(bytes(client_message, 'utf-8'))
-            time.sleep(2)
+            self.socket.send(bytes(client_message, 'latin1'))
+            time.sleep(1)
+
+    def send_info_data(self, filename):
+         if os.path.isfile(filename) == True:
+            file = open(filename, 'rb')
+            content = file.read(1024)
+            while True:
+                while content:
+                    self.socket.send(content)
+                    content = file.read(1024)
+                break
+            try:
+                time.sleep(1)
+                self.socket.send(bytes("Finish", "latin1"))
+            except Exception:
+                time.sleep(1)
+                self.socket.send(bytes("Finish", "latin1"))
+            file.close()
+
 
     def on_modified(self, event):
         client_message = f"modified, {event.src_path}"
@@ -78,24 +96,10 @@ class FSHandler:
             if os.path.isfile(event.src_path) == True:
                 self.option = 'modified'
                 self.current_file  = event.src_path
-                self.socket.send(bytes(client_message, 'utf-8'))
-                time.sleep(2)
-                while True:
-                    file = open(event.src_path, 'r', encoding="utf8", errors='ignore')
-                    content = file.read(1024)
-                    while content:
-                        self.socket.send(bytes(content, "utf-8"))
-                        content = file.read(1024)
-                        time.sleep(2)
-                    break
-                try:
-                    self.socket.send(bytes("Finish", "utf-8"))
-                    time.sleep(2)
-                except Exception:
-                    self.socket.send(bytes("Finish", "utf-8"))
-                    time.sleep(2)
-                    traceback.print_exc()
-                file.close()
+                self.socket.send(bytes(client_message, 'latin1'))
+                time.sleep(1)
+                self.send_info_data(event.src_path)
+               
         
     def on_moved(self, event):
         client_message = f"moved, {event.src_path}, {event.dest_path}"
@@ -105,5 +109,6 @@ class FSHandler:
             if os.path.isfile(event.dest_path) == True:
                 self.option = 'moved'
                 self.current_file = event.dest_path
-                self.socket.send(bytes(client_message, 'utf-8'))
-                time.sleep(2)
+                self.socket.send(bytes(client_message, 'latin1'))
+                time.sleep(1)
+                self.send_info_data(event.dest_path)
