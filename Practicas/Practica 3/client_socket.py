@@ -27,7 +27,18 @@ class ClientSocket:
             try:
                 server_message = self.client_socket.recv(1024)
                 server_message = server_message.decode("latin1")
-                self.make_action(server_message)
+                split_message = server_message.split("__##")
+                if len(split_message) == 1:
+                    self.make_action(split_message[0])
+                elif len(split_message[0]) == 0:
+                    self.make_action("Finish")
+                    self.make_action(split_message[2])
+                elif len(split_message[2]) == 0:
+                    self.make_action(split_message[0])
+                    self.make_action("Finish")
+                elif len(split_message[0]) == 0 and len(split_message[2]) == 0:
+                    self.make_action("Finish")
+                print(server_message)
             except Exception:
                 traceback.print_exc()
                 break

@@ -65,9 +65,19 @@ class SocketServer:
                 except Exception:
                     client_message = str(client_message.decode("latin1"))
                     option = 'non'
-                filename, info = self.make_actions(option, client_message, actions_maded, filename, info, connection)
+                print(client_message)
+                split_message = client_message.split("__##")                
+                if len(split_message) == 1:
+                    filename, info = self.make_actions(option, split_message[0], actions_maded, filename, info, connection)
+                elif len(split_message[0]) == 0:
+                    filename, info = self.make_actions(option, "Finish", actions_maded, filename, info, connection)
+                    filename, info = self.make_actions(option, split_message[2], actions_maded, filename, info, connection)
+                elif len(split_message[2]) == 0:
+                    filename, info = self.make_actions(option, split_message[0], actions_maded, filename, info, connection)
+                    filename, info = self.make_actions(option, "Finish", actions_maded, filename, info, connection)    
+                elif len(split_message[0]) == 0 and len(split_message[2]) == 0:
+                    filename, info = self.make_actions(option, "Finish", actions_maded, filename, info, connection)                             
             except Exception:
-                # traceback.print_exc()
                 print("Windows error")
                 break
         connection.close()
@@ -104,7 +114,6 @@ class SocketServer:
                 file = open(self.server_files + filename, 'wb')
                 file.write(info.encode("latin1"))
                 file.close()
-            # self.notify_clients(connection, 'modified', filename, '', info, '')
             info = ''
         else :
             info += client_message
@@ -122,13 +131,10 @@ class SocketServer:
         dest = ''
         if  option == 'created':
             filename = self.create(client_message, option)
-            # self.notify_clients(connection, option, filename, '', '','')
         elif  option == 'moved':
             src , dest = self.moved(client_message, option)
-            # self.notify_clients(connection, option, src, dest, '','')
         elif  option == 'deleted':
             filename = self.delete(client_message, option)
-            # self.notify_clients(connection, option, filename, '', '','')
         elif option == 'modified':
             filename = client_message.split(',')[-1].split("\\")[-1]
             print(option + " >>  " + filename)

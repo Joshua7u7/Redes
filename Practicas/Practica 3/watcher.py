@@ -56,7 +56,6 @@ class FSHandler:
                 self.option = 'created'
                 self.current_file = event.src_path
                 self.socket.send(client_message.encode("latin1"))
-                time.sleep(1)
         except:
             print("Error de permisos")
 
@@ -68,7 +67,6 @@ class FSHandler:
             self.option = 'deleted'
             self.current_file = event.src_path
             self.socket.send(bytes(client_message, 'latin1'))
-            time.sleep(1)
 
     def send_info_data(self, filename):
          if os.path.isfile(filename) == True:
@@ -80,11 +78,9 @@ class FSHandler:
                     content = file.read(1024)
                 break
             try:
-                time.sleep(1)
-                self.socket.send(bytes("Finish", "latin1"))
+                self.socket.send(bytes("__##Finish__##" "latin1"))
             except Exception:
-                time.sleep(1)
-                self.socket.send(bytes("Finish", "latin1"))
+                self.socket.send(bytes("__##Finish__##", "latin1"))
             file.close()
 
 
