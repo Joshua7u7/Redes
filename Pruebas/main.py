@@ -1,5 +1,2 @@
-file = open("Presentacion.pptx", "rb")
-content = file.read()
-file.close()
-file = open("p2.pptx", "wb")
-file.write(content)
+msg = "Aquialgo"
+print(len(msg.split("##")))
