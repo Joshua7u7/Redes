@@ -21,8 +21,9 @@ class SocketServer:
         self.host = host
 
     def configurate_socket(self):
-        self.server_descriptor = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.server_descriptor = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self.server_descriptor.bind((self.host, self.port))
+        print("published in host "+ str(self.host) + " : " +str(self.port))
 
     def make_listen(self):
         self.server_descriptor.listen(self.max_clients)
@@ -32,31 +33,29 @@ class SocketServer:
         threading.Thread(target=self.observer.start_observer).start()
         while True:
             try:
-                client_socket, (client_host, client_port) = self.server_descriptor.accept()
-                print(str(client_host) + ":" + str(client_port))
-                self.active_connections.append(client_socket)
-                self.observer.active_connections = self.active_connections
-                threading.Thread(target = self.handle_connections, args=(self.active_connections[-1], ) ).start()
+                data, addr = self.server_descriptor.recvfrom(1024)
+                new_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+                self.port += 1
+                new_socket.bind((self.host, self.port))
+                print("new socket binded in " + str((self.host, self.port)))
+                threading.Thread(target=self.handle_connections, args=(new_socket, )).start()
+                if addr not in self.active_connections:
+                    self.active_connections.append(addr)
+                    self.observer = self.active_connections
+                self.server_descriptor.sendto(bytes(str(self.port), "latin1"), addr)
             except:
                 break
         self.server_descriptor.close()
 
-    def decode_base64(self, data, altchars=b'+/'):
-        data = re.sub(rb'[^a-zA-Z0-9%s]+' % altchars, b'', data)  # normalize
-        missing_padding = len(data) % 4
-        if missing_padding:
-            data += b'='* (4 - missing_padding)
-        print(len(data))
-        return base64.b64decode(data, altchars)
-
     def handle_connections(self, connection):
+        print("start listeniiiiing: ")
         actions_maded = []
         valid_options = ['created','modified','moved','deleted']
         filename = ''
         info = ''
         while True:
             try:
-                client_message =  connection.recv(1024)
+                client_message, addr =  connection.recvfrom(1024)
                 try:
                     client_message = client_message.decode("latin1")
                     option = client_message.split(',')[0]
@@ -78,7 +77,7 @@ class SocketServer:
                 elif len(split_message[0]) == 0 and len(split_message[2]) == 0:
                     filename, info = self.make_actions(option, "Finish", actions_maded, filename, info, connection)                             
             except Exception:
-                print("Connection ended")
+                traceback.print_exc()
                 break
         connection.close()
 

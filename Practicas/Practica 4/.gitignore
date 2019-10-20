@@ -1,0 +1,6 @@
+.env
+
+server_files
+client_files
+
+__pycache__
