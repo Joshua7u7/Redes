@@ -1,0 +1,47 @@
+* {
+    align-content: center;
+    margin: 0;
+    padding: 0;
+}
+
+.first-action {
+    display: flex;
+}
+
+.first {
+    background-color: #2286c3;
+    width: 100%;
+    height: 2em;
+}
+.header {
+    background-color: #64b5f6 ;
+    width: 100%;
+    height: 10rem;
+}
+
+.welcome {
+    text-align: center;
+    color: white;
+}
+
+.welcome p {
+    margin-top: 2em;
+}
+
+.btn {
+    border-radius: 5px;
+    border-style: none;
+}
+
+.actions {
+    margin-left: 5em;
+    display: inline-block;
+}
+
+.main {
+    display: inline-flex;
+}
+
+.topology {
+    margin-left: 30em;
+}

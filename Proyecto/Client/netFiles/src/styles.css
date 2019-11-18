@@ -1,0 +1,134 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,700');
+
+/* You can add global styles to this file, and also import other style files */
+
+body,
+html {
+    height: 100%;
+    margin: 0 auto;
+}
+
+body {
+    font-family: 'Montserrat';
+    font-size: 18px;
+}
+
+.top-sidenav {
+    background: white;
+}
+
+
+/* Dialog Excel Error */
+
+.dialog-excel-error .mat-dialog-container {
+    background-color: white;
+    width: 600px;
+    height: 400px;
+    color: black;
+    border-radius: 15px;
+}
+
+
+/* Dialog Excel Error */
+
+a {
+    text-decoration: none;
+}
+
+
+/* notification snackbar excel*/
+
+snack-bar-container.success {
+    background-color: #5cb85c;
+    color: #fff;
+}
+
+snack-bar-container.warn {
+    background-color: orange;
+    color: #fff;
+}
+
+snack-bar-container.notification simple-snack-bar {
+    font-size: 18px !important;
+    font-weight: bold;
+}
+
+.filters-create {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.normal-primaryButton {
+    background: #2286c3;
+    color: white;
+    font-size: 20px;
+    height: 40px;
+    width: 15em;
+}
+
+.normal-secondaryButton {
+    border: 2px solid #2286c3!important;
+    background: white;
+    color: #2286c3!important;
+    font-size: 20px;
+    height: 40px;
+    width: 15em;
+}
+
+.normal-primaryButton:hover {
+    background: #9be7ff;
+}
+
+.normal-primaryButton:active {
+    background: #9be7ff;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+}
+
+.normal-secondaryButton:hover {
+    border: 2px solid #64b5f6!important;
+    color: #64b5f6!important;
+}
+
+.normal-secondaryButton:active {
+    border: 2px solid #790e8b!important;
+    color: #790e8b!important;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+}
+
+.normal-primaryButton:disabled {
+    background: #2286c3;
+    color: white!important;
+}
+
+.primary-tooltip {
+    background-color: #2286c3;
+}
+
+.normal-secondaryButton:disabled {
+    background: #790e8b;
+    border: 0px!important;
+    color: white!important;
+}
+
+.center {
+    text-align: center;
+}
+
+/* h1 {
+    font-size: 40px!important;
+    color: #a4a4a6;
+} */
+
+.dialog-title {
+    background-color: #60576C!important;
+    text-align: center;
+    color: white;
+    width: 100%;
+    margin-top: 0%;
+    font-size: 40px;
+    padding: 1% 0% 1% 0%;
+}

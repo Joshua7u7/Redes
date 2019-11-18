@@ -1,0 +1,6 @@
+#Modules
+node_modules
+public
+
+#Enviroments
+.env

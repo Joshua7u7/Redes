@@ -1,0 +1,22 @@
+<br>
+<div>
+    <form [formGroup]="uploadForm">
+
+        <input hidden type="file" multiple #uploader (change)="uploadFile($event)" />
+
+        <button (click)="uploader.click()" mat-raised-button matTooltip="Importa un archivo para habilitar 'Subir Archivo'" matTooltipPosition="above" class="normal-primaryButton" matTooltipClass="primary-tooltip">
+            Importar Archivo
+        </button>
+
+        <button *ngIf="!buttonEnable" mat-raised-button type="button" (click)="onSubmit()" disabled class="normal-secondaryButton">
+            Subir Archivo
+        </button>
+
+        <button *ngIf="buttonEnable" mat-raised-button type="button" (click)="onSubmit()" class="normal-secondaryButton">
+             Subir Archivo
+        </button>
+
+        <small> {{fileName}}</small>
+    </form>
+</div>
+<br>

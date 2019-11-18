@@ -1,0 +1,24 @@
+Nov 10 17:51:12.649 HYPERVISOR: Release 0.2.17-x86/Windows (tag 2017072410)
+Nov 10 17:51:12.651 HYPERVISOR: Started on IP = 192.168.0.18, TCP port = 57094.
+Nov 10 17:51:13.093 HYPERVISOR: exec_cmd: hypervisor version 
+Nov 10 17:51:13.094 HYPERVISOR: exec_cmd: hypervisor working_dir C:\Users\josue.ruiz\Documents\ESCOM\Redes\GNS3\broadcast\project-files\dynamips 
+Nov 10 17:51:13.095 GENERAL: working_dir=C:\Users\josue.ruiz\Documents\ESCOM\Redes\GNS3\broadcast\project-files\dynamips
+Nov 10 17:51:13.096 HYPERVISOR: exec_cmd: ethsw create Switch1 
+Nov 10 17:51:16.930 HYPERVISOR: exec_cmd: nio create_udp udp-47840373-6c6d-4f2d-b7d1-00552a4f5128 10001 192.168.0.18 10000 
+Nov 10 17:51:16.931 HYPERVISOR: exec_cmd: ethsw add_nio Switch1 udp-47840373-6c6d-4f2d-b7d1-00552a4f5128 
+Nov 10 17:51:16.942 HYPERVISOR: exec_cmd: ethsw set_access_port Switch1 udp-47840373-6c6d-4f2d-b7d1-00552a4f5128 1 
+Nov 10 17:51:16.993 HYPERVISOR: exec_cmd: nio create_udp udp-19edb584-0540-4b00-ae42-9deed8df499b 10004 192.168.0.18 10005 
+Nov 10 17:51:16.994 HYPERVISOR: exec_cmd: ethsw add_nio Switch1 udp-19edb584-0540-4b00-ae42-9deed8df499b 
+Nov 10 17:51:17.004 HYPERVISOR: exec_cmd: ethsw set_access_port Switch1 udp-19edb584-0540-4b00-ae42-9deed8df499b 1 
+Nov 10 17:51:17.045 HYPERVISOR: exec_cmd: nio create_udp udp-1568ce3c-50c1-4c3b-8c5c-d4d9108072e8 10006 192.168.0.18 10007 
+Nov 10 17:51:17.045 HYPERVISOR: exec_cmd: ethsw add_nio Switch1 udp-1568ce3c-50c1-4c3b-8c5c-d4d9108072e8 
+Nov 10 17:51:17.066 HYPERVISOR: exec_cmd: ethsw set_access_port Switch1 udp-1568ce3c-50c1-4c3b-8c5c-d4d9108072e8 1 
+Nov 10 17:51:18.181 HYPERVISOR: exec_cmd: nio create_udp udp-a011bec4-b1c1-4a6a-a957-f177a00f2801 10036 192.168.0.18 10037 
+Nov 10 17:51:18.182 HYPERVISOR: exec_cmd: ethsw add_nio Switch1 udp-a011bec4-b1c1-4a6a-a957-f177a00f2801 
+Nov 10 17:51:18.188 HYPERVISOR: exec_cmd: ethsw set_access_port Switch1 udp-a011bec4-b1c1-4a6a-a957-f177a00f2801 1 
+Nov 10 17:51:18.280 HYPERVISOR: exec_cmd: ethsw remove_nio Switch1 udp-a011bec4-b1c1-4a6a-a957-f177a00f2801 
+Nov 10 17:51:18.289 HYPERVISOR: exec_cmd: nio delete udp-a011bec4-b1c1-4a6a-a957-f177a00f2801 
+Nov 10 17:51:18.296 HYPERVISOR: exec_cmd: ethsw delete Switch1 
+Nov 10 17:51:18.351 HYPERVISOR: exec_cmd: hypervisor stop 
+Nov 10 17:51:18.597 HYPERVISOR: Stopped.
+Nov 10 17:51:18.597 GENERAL: reset done.

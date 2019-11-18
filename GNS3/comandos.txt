@@ -1,0 +1,62 @@
+Router:
+
+Definir ip
+
+- config t
+- int "nombre de la interfaz"
+- ip addr "ip" "mascara de subred"
+- no sh
+
+Crear enritamiento dinamico con dhcp:
+
+- config t
+- ip dhcp pool "nombre del pool"
+- ip network "red que esta manejando" "mascara de red"
+- default-router "ip del router"
+- dns-server "la ip de dns a usar 8.8.8.8"
+- ip dhcp excluded-address "primera ip a excluir" "ultima ip a excluir" se recomiendan las primeras 50
+
+Para guardar en router
+
+-wr
+
+Asignar ip a pc:
+
+- ip "direccion de ip a asignar" "mascara de red" gateway "ip del router o puerta de enlace"
+- save
+
+Asignar ip por dhcp:
+
+- dhcp
+- save
+
+En las maquinas virtuales asignas la ip en la configuración de red en forma manual o bien en manual dhcp 
+y se asigna inmediatamente por este protocolo.
+
+
+Levantar interfaz de loopback:
+
+- config t
+- int loopback 0
+- ip addr "ip del loopback" "mascara de loopback" 
+- no sh
+
+Acceder al loopback desde otro router
+
+- ip route 0.0.0.0 0.0.0.0 172.16.0.1 dice que todo aquello que no conozca lo mande a la ip especificada
+
+Pra dar internet a la topologia
+
+- en el cmd poner el comando hdwwiz
+- se brira el asistente para agregar sofware
+- Instalar el hardware seleccionado ...
+- Seleccionar adaptadores de red
+- Seleccionar microsoft
+- Adaptador de loopback
+
+- En panel de control vamos a redes e internet
+- Cambiar configuración del adaptador
+- Centro de redes y seleccionamos la interfaz real que nos provee de internet
+- Propiedades -> uso compartido -> permitir que los usua.... 
+- seleccionar la interfaz creada
+- reiniciar el sistema

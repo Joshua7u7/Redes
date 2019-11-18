@@ -1,0 +1,34 @@
+{
+  "name": "networks",
+  "version": "1.0.0",
+  "description": "Backend to receive files",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "watch-ts": "tsc -w",
+    "watch-node": "nodemon dist/server.js",
+    "debug": "concurrently \"npm run watch-ts\" \"npm run watch-node\" "
+  },
+  "keywords": [
+    "networks",
+    "files",
+    "backend"
+  ],
+  "author": "Josue Ruiz Hernandez",
+  "license": "ISC",
+  "dependencies": {
+    "@types/cors": "^2.8.6",
+    "@types/dotenv": "^8.2.0",
+    "@types/express": "^4.17.2",
+    "@types/morgan": "^1.7.37",
+    "@types/multer": "^1.3.10",
+    "concurrently": "^5.0.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "morgan": "^1.9.1",
+    "multer": "^1.4.2",
+    "nodemon": "^1.19.4",
+    "path": "^0.12.7"
+  }
+}
