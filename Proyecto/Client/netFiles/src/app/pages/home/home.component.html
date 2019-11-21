@@ -4,17 +4,17 @@
             <br><br>
                 <h1>¡Bienvenido!</h1>
                 <p>En esta página podrá tanto subir archivos, así como recuperarlos desde nuestro servidor.</p>
-        </div>    
+        </div>
 </div>
 
-<div class="main"> 
+<div class="main">
         <div class="image1">
                 <img src="http://www.escom.ipn.mx/images/logoESCOM2x.png" alt="">
         </div>
-        <div class="actions"> 
+        <div class="actions">
             <app-import-files></app-import-files>
             <br><br><br>
-            <input type="button" value="Recuperar archivo" class="normal-primaryButton btn" matTooltipClass="primary-tooltip">
+            <input type="button" value="Recuperar archivo" class="normal-primaryButton btn" matTooltipClass="primary-tooltip" (click)="getFile()">
         </div>
 </div>
 <div class="topology">

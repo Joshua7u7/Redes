@@ -11,6 +11,13 @@ class DocumentController {
     }
     res.json({status: "success", err:{}, data:{info: files_names}});
   }
+
+  public getFile (req: Request, res: Response) {
+    const filename = req.params.filename;
+    console.log(filename);
+    res.download(process.env.FILES_PATH + filename);
+    // res.send(process.env.FILES_PATH + filename);
+  }
  
 }
 

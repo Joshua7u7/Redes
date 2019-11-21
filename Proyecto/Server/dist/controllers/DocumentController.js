@@ -9,6 +9,12 @@ class DocumentController {
         }
         res.json({ status: "success", err: {}, data: { info: files_names } });
     }
+    getFile(req, res) {
+        const filename = req.params.filename;
+        console.log(filename);
+        res.download(process.env.FILES_PATH + filename);
+        // res.send(process.env.FILES_PATH + filename);
+    }
 }
 const documentController = new DocumentController();
 exports.default = documentController;

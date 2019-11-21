@@ -8,6 +8,7 @@ class HomeRoutes {
     }
     config(): void {
         this.router.post("/files", documentController.receive );
+        this.router.get("/get/file/:filename", documentController.getFile);
     }
 }
 

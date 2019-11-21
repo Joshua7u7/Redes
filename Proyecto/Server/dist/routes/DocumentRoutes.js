@@ -12,6 +12,7 @@ class HomeRoutes {
     }
     config() {
         this.router.post("/files", DocumentController_1.default.receive);
+        this.router.get("/get/file/:filename", DocumentController_1.default.getFile);
     }
 }
 const DocumentsRouter = new HomeRoutes();
