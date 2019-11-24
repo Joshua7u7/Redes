@@ -454,7 +454,7 @@
             },
             {
                 "filters": {},
-                "link_id": "f9746565-a677-4092-ae35-f2cb53eca85d",
+                "link_id": "dac1e82d-d9fa-4e83-9601-98b234a80bb3",
                 "nodes": [
                     {
                         "adapter_number": 0,
@@ -462,11 +462,11 @@
                             "rotation": 0,
                             "style": "font-family: TypeWriter;font-size: 10.0;font-weight: bold;fill: #000000;fill-opacity: 1.0;",
                             "text": "LL",
-                            "x": -8,
-                            "y": 55
+                            "x": -9,
+                            "y": 46
                         },
-                        "node_id": "5ef197b5-6206-4b39-a513-c2cab590269e",
-                        "port_number": 0
+                        "node_id": "5cae7201-66a1-459f-aeb6-b01e2da5c9cf",
+                        "port_number": 1
                     },
                     {
                         "adapter_number": 2,
@@ -474,8 +474,8 @@
                             "rotation": 0,
                             "style": "font-family: TypeWriter;font-size: 10.0;font-weight: bold;fill: #000000;fill-opacity: 1.0;",
                             "text": "f2/0",
-                            "x": 71,
-                            "y": 12
+                            "x": 72,
+                            "y": 16
                         },
                         "node_id": "8af7a373-3356-47c6-bc1e-6efb123a9d7b",
                         "port_number": 0
@@ -873,7 +873,7 @@
             {
                 "compute_id": "local",
                 "console": 5013,
-                "console_auto_start": false,
+                "console_auto_start": true,
                 "console_type": "telnet",
                 "custom_adapters": [],
                 "first_port_name": null,
@@ -1250,7 +1250,7 @@
                 },
                 "locked": false,
                 "name": "Cloud1",
-                "node_id": "5ef197b5-6206-4b39-a513-c2cab590269e",
+                "node_id": "5cae7201-66a1-459f-aeb6-b01e2da5c9cf",
                 "node_type": "cloud",
                 "port_name_format": "Ethernet{0}",
                 "port_segment_size": 0,
@@ -1299,9 +1299,15 @@
                     ],
                     "ports_mapping": [
                         {
+                            "interface": "Ethernet",
+                            "name": "Ethernet",
+                            "port_number": 0,
+                            "type": "ethernet"
+                        },
+                        {
                             "interface": "LL",
                             "name": "LL",
-                            "port_number": 0,
+                            "port_number": 1,
                             "type": "ethernet"
                         }
                     ],
@@ -1313,8 +1319,8 @@
                 "symbol": ":/symbols/cloud.svg",
                 "template_id": "39e257dc-8412-3174-b6b3-0ee3ed6a43e9",
                 "width": 159,
-                "x": 269,
-                "y": -204,
+                "x": 288,
+                "y": -178,
                 "z": 1
             }
         ]
