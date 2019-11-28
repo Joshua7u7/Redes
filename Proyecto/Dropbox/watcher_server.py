@@ -75,20 +75,35 @@ class FSHandler:
     def send_info_data(self, filename):
         if os.path.isfile(filename) == True:
             file = open(filename, 'rb')
-            content = file.read(1024)
-            while True:
-                while content:
-                    for connection in self.active_connections:
-                        connection.send(content)
-                    content = file.read(1024)
-                break
-            try:
-                for connection in self.active_connections:
-                    connection.send(bytes("__##Finish__##", "latin1"))
-            except Exception:
-                for connection in self.active_connections:
-                    connection.send(bytes("__##Finish__##", "latin1"))
+            size_counter = 0
+            clients_position = 0
+            while ( clients_position  <  3 ):
+                current_client = clients_position
+                content = file.read(1024)
+                self.active_connections[clients_position].send(content)
+                size_counter += 1024
+                clients_position = self.get_client(size_counter, filename)
+                if current_client != clients_position:
+                    try:
+                        self.active_connections[current_client].send(bytes("__##Finish__##", "latin1"))
+                    except Exception:
+                        self.active_connections[current_client].send(bytes("__##Finish__##", "latin1"))
             file.close()        
+
+    def get_client(self, counter, filename):
+        total_size =  os.stat(filename).st_size
+        first_client = total_size / 3
+        second_client = ( total_size / 3 ) * 2
+        tihrd_client = total_size
+        if counter <= first_client:
+            return 0
+        elif counter > first_client and counter <= second_client:
+            return 1
+        elif counter > second_client and counter <= tihrd_client:
+            return 2
+        else:
+            return 3
+
 
     def on_modified(self, event):
         if self.option == 'modified' and self.current_file == event.src_path:
