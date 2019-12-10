@@ -214,8 +214,8 @@
                             "rotation": 0,
                             "style": "font-family: TypeWriter;font-size: 10.0;font-weight: bold;fill: #000000;fill-opacity: 1.0;",
                             "text": "f2/0",
-                            "x": 44,
-                            "y": -27
+                            "x": 62,
+                            "y": -42
                         },
                         "node_id": "5d91373a-ec91-4e4e-8edf-aa838e262349",
                         "port_number": 0
@@ -361,37 +361,6 @@
             },
             {
                 "filters": {},
-                "link_id": "7953b40a-7faf-4697-82da-660e35639109",
-                "nodes": [
-                    {
-                        "adapter_number": 0,
-                        "label": {
-                            "rotation": 0,
-                            "style": "font-family: TypeWriter;font-size: 10.0;font-weight: bold;fill: #000000;fill-opacity: 1.0;",
-                            "text": "e3",
-                            "x": 64,
-                            "y": -11
-                        },
-                        "node_id": "2fc6e39e-2515-402d-9bb4-fe8a9ecd805c",
-                        "port_number": 3
-                    },
-                    {
-                        "adapter_number": 0,
-                        "label": {
-                            "rotation": 0,
-                            "style": "font-family: TypeWriter;font-size: 10.0;font-weight: bold;fill: #000000;fill-opacity: 1.0;",
-                            "text": "e0",
-                            "x": -4,
-                            "y": 63
-                        },
-                        "node_id": "5300632a-d586-4622-98e6-44a05f88a605",
-                        "port_number": 0
-                    }
-                ],
-                "suspend": false
-            },
-            {
-                "filters": {},
                 "link_id": "6035bd2f-6417-4c76-b341-3e00d897c8d7",
                 "nodes": [
                     {
@@ -423,30 +392,61 @@
             },
             {
                 "filters": {},
-                "link_id": "c853dbb7-ab13-4abe-b28d-7814c50816a8",
+                "link_id": "ecc68a6d-28e6-4f6b-9d41-3650f0faae04",
                 "nodes": [
                     {
                         "adapter_number": 0,
                         "label": {
                             "rotation": 0,
                             "style": "font-family: TypeWriter;font-size: 10.0;font-weight: bold;fill: #000000;fill-opacity: 1.0;",
-                            "text": "e1",
-                            "x": 14,
-                            "y": 50
+                            "text": "e0",
+                            "x": -5,
+                            "y": 62
                         },
-                        "node_id": "7fdf55da-712f-4749-a22a-eceb41732666",
-                        "port_number": 1
+                        "node_id": "1afd3915-f807-40b5-8d5c-04978d9d58cc",
+                        "port_number": 0
                     },
                     {
                         "adapter_number": 0,
                         "label": {
                             "rotation": 0,
                             "style": "font-family: TypeWriter;font-size: 10.0;font-weight: bold;fill: #000000;fill-opacity: 1.0;",
-                            "text": "e0",
-                            "x": 53,
-                            "y": -4
+                            "text": "e3",
+                            "x": 65,
+                            "y": -10
                         },
-                        "node_id": "955c406d-6c9b-48a4-ab0f-692f87588f11",
+                        "node_id": "2fc6e39e-2515-402d-9bb4-fe8a9ecd805c",
+                        "port_number": 3
+                    }
+                ],
+                "suspend": false
+            },
+            {
+                "filters": {},
+                "link_id": "e1f2dee5-f7de-43f7-aa34-1747e8558cfd",
+                "nodes": [
+                    {
+                        "adapter_number": 2,
+                        "label": {
+                            "rotation": 0,
+                            "style": "font-family: TypeWriter;font-size: 10.0;font-weight: bold;fill: #000000;fill-opacity: 1.0;",
+                            "text": "f2/0",
+                            "x": 71,
+                            "y": 13
+                        },
+                        "node_id": "8af7a373-3356-47c6-bc1e-6efb123a9d7b",
+                        "port_number": 0
+                    },
+                    {
+                        "adapter_number": 0,
+                        "label": {
+                            "rotation": 0,
+                            "style": "font-family: TypeWriter;font-size: 10.0;font-weight: bold;fill: #000000;fill-opacity: 1.0;",
+                            "text": "LL",
+                            "x": -8,
+                            "y": 55
+                        },
+                        "node_id": "a0b06891-2dc0-4fc0-89c7-7b0f91c791fe",
                         "port_number": 0
                     }
                 ],
@@ -454,30 +454,30 @@
             },
             {
                 "filters": {},
-                "link_id": "dac1e82d-d9fa-4e83-9601-98b234a80bb3",
+                "link_id": "69dc1e47-e38f-4512-a71b-eef5f68cc940",
                 "nodes": [
+                    {
+                        "adapter_number": 2,
+                        "label": {
+                            "rotation": 0,
+                            "style": "font-family: TypeWriter;font-size: 10.0;font-weight: bold;fill: #000000;fill-opacity: 1.0;",
+                            "text": "f2/1",
+                            "x": 32,
+                            "y": 61
+                        },
+                        "node_id": "5d91373a-ec91-4e4e-8edf-aa838e262349",
+                        "port_number": 1
+                    },
                     {
                         "adapter_number": 0,
                         "label": {
                             "rotation": 0,
                             "style": "font-family: TypeWriter;font-size: 10.0;font-weight: bold;fill: #000000;fill-opacity: 1.0;",
                             "text": "LL",
-                            "x": -9,
-                            "y": 46
+                            "x": 79,
+                            "y": -4
                         },
-                        "node_id": "5cae7201-66a1-459f-aeb6-b01e2da5c9cf",
-                        "port_number": 1
-                    },
-                    {
-                        "adapter_number": 2,
-                        "label": {
-                            "rotation": 0,
-                            "style": "font-family: TypeWriter;font-size: 10.0;font-weight: bold;fill: #000000;fill-opacity: 1.0;",
-                            "text": "f2/0",
-                            "x": 72,
-                            "y": 16
-                        },
-                        "node_id": "8af7a373-3356-47c6-bc1e-6efb123a9d7b",
+                        "node_id": "d98f0141-4b3c-48e7-b459-c5a418b9120b",
                         "port_number": 0
                     }
                 ],
@@ -1166,52 +1166,13 @@
                 "label": {
                     "rotation": 0,
                     "style": "font-family: TypeWriter;font-size: 10.0;font-weight: bold;fill: #000000;fill-opacity: 1.0;",
-                    "text": "ubuntu-3-1",
-                    "x": -8,
-                    "y": -25
-                },
-                "locked": false,
-                "name": "ubuntu-3-1",
-                "node_id": "5300632a-d586-4622-98e6-44a05f88a605",
-                "node_type": "virtualbox",
-                "port_name_format": "Ethernet{0}",
-                "port_segment_size": 0,
-                "properties": {
-                    "adapter_type": "Intel PRO/1000 MT Desktop (82540EM)",
-                    "adapters": 1,
-                    "headless": false,
-                    "linked_clone": false,
-                    "on_close": "power_off",
-                    "ram": 2950,
-                    "usage": "",
-                    "use_any_adapter": false,
-                    "vmname": "ubuntu-3"
-                },
-                "symbol": ":/symbols/vbox_guest.svg",
-                "template_id": "0954baef-875b-493f-af8f-7f4540c7621a",
-                "width": 65,
-                "x": 32,
-                "y": -277,
-                "z": 1
-            },
-            {
-                "compute_id": "local",
-                "console": null,
-                "console_auto_start": false,
-                "console_type": "none",
-                "custom_adapters": [],
-                "first_port_name": "",
-                "height": 59,
-                "label": {
-                    "rotation": 0,
-                    "style": "font-family: TypeWriter;font-size: 10.0;font-weight: bold;fill: #000000;fill-opacity: 1.0;",
                     "text": "ubuntu-4-1",
                     "x": -8,
                     "y": -25
                 },
                 "locked": false,
                 "name": "ubuntu-4-1",
-                "node_id": "955c406d-6c9b-48a4-ab0f-692f87588f11",
+                "node_id": "1afd3915-f807-40b5-8d5c-04978d9d58cc",
                 "node_type": "virtualbox",
                 "port_name_format": "Ethernet{0}",
                 "port_segment_size": 0,
@@ -1229,8 +1190,8 @@
                 "symbol": ":/symbols/vbox_guest.svg",
                 "template_id": "d3a295fb-a9b6-4baf-a2ea-5c3a933fd5eb",
                 "width": 65,
-                "x": 134,
-                "y": 171,
+                "x": 52,
+                "y": -289,
                 "z": 1
             },
             {
@@ -1250,7 +1211,7 @@
                 },
                 "locked": false,
                 "name": "Cloud1",
-                "node_id": "5cae7201-66a1-459f-aeb6-b01e2da5c9cf",
+                "node_id": "a0b06891-2dc0-4fc0-89c7-7b0f91c791fe",
                 "node_type": "cloud",
                 "port_name_format": "Ethernet{0}",
                 "port_segment_size": 0,
@@ -1299,15 +1260,9 @@
                     ],
                     "ports_mapping": [
                         {
-                            "interface": "Ethernet",
-                            "name": "Ethernet",
-                            "port_number": 0,
-                            "type": "ethernet"
-                        },
-                        {
                             "interface": "LL",
                             "name": "LL",
-                            "port_number": 1,
+                            "port_number": 0,
                             "type": "ethernet"
                         }
                     ],
@@ -1319,8 +1274,92 @@
                 "symbol": ":/symbols/cloud.svg",
                 "template_id": "39e257dc-8412-3174-b6b3-0ee3ed6a43e9",
                 "width": 159,
-                "x": 288,
-                "y": -178,
+                "x": 253,
+                "y": -198,
+                "z": 1
+            },
+            {
+                "compute_id": "local",
+                "console": null,
+                "console_auto_start": false,
+                "console_type": null,
+                "custom_adapters": [],
+                "first_port_name": null,
+                "height": 71,
+                "label": {
+                    "rotation": 0,
+                    "style": "font-family: TypeWriter;font-size: 10.0;font-weight: bold;fill: #000000;fill-opacity: 1.0;",
+                    "text": "Cloud2",
+                    "x": 54,
+                    "y": -25
+                },
+                "locked": false,
+                "name": "Cloud2",
+                "node_id": "d98f0141-4b3c-48e7-b459-c5a418b9120b",
+                "node_type": "cloud",
+                "port_name_format": "Ethernet{0}",
+                "port_segment_size": 0,
+                "properties": {
+                    "interfaces": [
+                        {
+                            "name": "Wi-Fi",
+                            "special": true,
+                            "type": "ethernet"
+                        },
+                        {
+                            "name": "Ethernet",
+                            "special": false,
+                            "type": "ethernet"
+                        },
+                        {
+                            "name": "Bluetooth Network Connection",
+                            "special": true,
+                            "type": "ethernet"
+                        },
+                        {
+                            "name": "VirtualBox Host-Only Network",
+                            "special": true,
+                            "type": "ethernet"
+                        },
+                        {
+                            "name": "vEthernet (nat)",
+                            "special": true,
+                            "type": "ethernet"
+                        },
+                        {
+                            "name": "Loopback",
+                            "special": true,
+                            "type": "ethernet"
+                        },
+                        {
+                            "name": "GNS3",
+                            "special": true,
+                            "type": "ethernet"
+                        },
+                        {
+                            "name": "LL",
+                            "special": false,
+                            "type": "ethernet"
+                        }
+                    ],
+                    "ports_mapping": [
+                        {
+                            "interface": "LL",
+                            "name": "LL",
+                            "port_number": 0,
+                            "type": "ethernet"
+                        }
+                    ],
+                    "remote_console_host": "",
+                    "remote_console_http_path": "/",
+                    "remote_console_port": 23,
+                    "remote_console_type": "none"
+                },
+                "symbol": ":/symbols/cloud.svg",
+                "template_id": "39e257dc-8412-3174-b6b3-0ee3ed6a43e9",
+                "width": 159,
+                "x": 33,
+                "y": 188,
                 "z": 1
             }
         ]
